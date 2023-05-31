@@ -12,6 +12,8 @@ import { PostgresAdapter } from 'kysely';
 import { TranslateModule } from '@core/translate';
 import { CoreModule } from '@core';
 import { ChangeLanguageModule } from './change_language/change_language.module';
+import { InfoModule } from './info/info.module';
+import { HomeModule } from './home/home.module';
 
 const store = (config: ConfigService) => {
     return Postgres<PostgresAdapter>({
@@ -41,6 +43,8 @@ const store = (config: ConfigService) => {
             }),
         }),
         ChangeLanguageModule,
+        InfoModule,
+        HomeModule,
     ],
     controllers: [BotController],
     providers: [BotService, BotUpdate],

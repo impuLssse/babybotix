@@ -1,6 +1,7 @@
 {
     "scenes": {
-        "start": {},
-        "change_language": {}
+        "home": {},
+        "change_language": {},
+        "faq": {}
     }
 }

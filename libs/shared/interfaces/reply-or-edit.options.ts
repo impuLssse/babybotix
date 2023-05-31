@@ -4,7 +4,5 @@ import { InlineKeyboardMarkup } from 'telegraf/typings/core/types/typegram';
 export interface IReplyOrEditOptions {
     text: I18nPath;
     args?: any;
-    extra?: {
-        reply_markup: InlineKeyboardMarkup;
-    };
+    reply_markup: InlineKeyboardMarkup;
 }

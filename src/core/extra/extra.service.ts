@@ -2,8 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { IContext, IButton, IReplyOrEditOptions, IReplyAlertOptions } from '@shared/interfaces';
 import { Langs, I18nPath } from '@shared/types';
 import { TranslateService } from '@core/translate';
-import { Buttons, CallbackButton, Keyboard, MakeOptions } from 'telegram-keyboard';
 import { InlineKeyboardMarkup } from 'telegraf/typings/core/types/typegram';
+
+// @ts-ignore
+import { Buttons, CallbackButton, Keyboard, MakeOptions } from 'telegram-keyboard';
 
 /** Сервис по работе сообщениями
  * * Типизурем работу с кнопками
@@ -14,13 +16,14 @@ export class ExtraService {
     constructor(private readonly translate: TranslateService) {}
 
     /** Избавляемся от спама сообщений, путем изменения прошлого текстового сообщения */
-    async replyOrEdit(ctx: IContext, lang: Langs, { text, args, extra }: IReplyOrEditOptions) {
-        const phrase = this.translate.findPhrase(text, lang, args);
+    async replyOrEdit(ctx: IContext, lang: Langs, options: IReplyOrEditOptions) {
+        const { reply_markup } = options;
+        const phrase = this.translate.findPhrase(options.text, lang, options.args);
 
         try {
-            return await ctx.editMessageText(phrase, extra);
+            return await ctx.editMessageText(phrase, { reply_markup });
         } catch (e) {
-            return await ctx.sendMessage(phrase, extra);
+            return await ctx.sendMessage(phrase, { reply_markup });
         }
     }
 
@@ -64,9 +67,9 @@ export class ExtraService {
      */
     makeInlineKeyboard(
         raw_buttons: IButton[] | IButton[][] | I18nPath[] | I18nPath[][] | (IButton[] | I18nPath[])[],
-        lang?: Langs,
+        lang: Langs,
         makeOptions?: MakeOptions,
-    ): { reply_markup: InlineKeyboardMarkup } {
+    ) {
         const parsed_buttons = raw_buttons.map((buttons: string | string[] | IButton | IButton[]) => {
             if (typeof buttons == 'string') {
                 return this.toCallbackButton({ text: buttons as I18nPath }, lang);
@@ -84,6 +87,8 @@ export class ExtraService {
                 return this.toCallbackButton(buttons, lang);
             }
         });
+
+        console.log(lang, parsed_buttons);
 
         return Keyboard.inline(parsed_buttons as CallbackButton[], makeOptions);
     }

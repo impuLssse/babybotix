@@ -8,18 +8,21 @@ export type I18nTranslations = {
     "buttons": {
         "back": string;
         "change_language": string;
+        "faq": string;
     };
     "phrases": {
-        "start": string;
+        "home": string;
         "change_language": string;
+        "faq": string;
     };
     "languages": {
         "en": string;
         "ru": string;
     };
     "scenes": {
-        "start": {};
+        "home": {};
         "change_language": {};
+        "faq": {};
     };
 };
 export type I18nPath = Path<I18nTranslations>;
