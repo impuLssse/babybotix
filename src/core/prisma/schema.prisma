@@ -22,3 +22,35 @@ model Admin {
   @@index([userId, chatId])
   @@map("admins")
 }
+
+model Chapter {
+  id          Int        @id @default(autoincrement())
+  name        String     @unique
+  pic         String     @default("")
+  description String
+  category    Category[]
+
+  @@map("chapters")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  chapterId Int       @unique
+  chapter   Chapter   @relation(fields: [chapterId], references: [id])
+  productId Int?
+  product   Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id         Int       @id @default(autoincrement())
+  name       String    @unique
+  price      Int?      @default(0)
+  amount     Int
+  sale       Int
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId Int?
+
+  @@map("products")
+}

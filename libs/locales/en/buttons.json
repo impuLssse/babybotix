@@ -1,5 +1,38 @@
 {
     "back": "Back",
     "change_language": "Change language",
-    "faq": "Information"
+    "faq": "Information",
+    "name": "name",
+    "accept": "✅ Accept",
+    "cancel": "❌ Cancel",
+    "add_photos": "Add photos",
+    "admin": {
+        "adminpanel": "Admin panel",
+        "create": "Create",
+        "control": "⚙ Control"
+    },
+    "shop": {
+        "chapters": {
+            "create": "Chapters create",
+            "modify": "Chapters modify",
+            "delete": "Chapters delete"
+        },
+        "categories": {
+            "list": "❤️ Select category",
+            "control": "Categories control!",
+            "create": "Categories create",
+            "modify": "Categories modify",
+            "delete": "Categories delete"
+        },
+        "products": {
+            "list": "❤️ Select product",
+            "control": "Products control",
+            "create": "Products create",
+            "modify": "Products modify",
+            "delete": "Products delete"
+        }
+    },
+    "products": "Products",
+    "chapters": "Chapters",
+    "buy": "Buy"
 }

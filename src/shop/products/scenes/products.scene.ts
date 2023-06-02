@@ -3,23 +3,23 @@ import { ActionContract, SceneContract } from '@libs/shared/decorators';
 import { IContext } from '@libs/shared/interfaces';
 import { SceneEnter } from 'nestjs-telegraf';
 
-@SceneContract('scenes.faq')
-export class InfoScene {
+@SceneContract('scenes.shop.products.list')
+export class ProductsScene {
     constructor(private readonly extra: ExtraService) {}
 
     @SceneEnter()
-    async enter(ctx: IContext) {
+    async start(ctx: IContext) {
         const { extra } = this;
         const { lang } = ctx.session;
 
-        await extra.replyOrEdit(ctx, ctx.session.lang, {
-            text: 'phrases.faq',
-            ...extra.typedInlineKeyboard([['buttons.back']], lang),
+        extra.replyOrEdit(ctx, lang, {
+            text: 'phrases.shop.products.list',
+            ...extra.simpleInlineKeyboard([]),
         });
     }
 
-    @ActionContract('buttons.back')
-    async back(ctx: IContext) {
-        await ctx.scene.enter('scenes.home');
+    @ActionContract('buttons.products')
+    async toUniqueProduct(ctx: IContext) {
+        await ctx.scene.enter('scenes.shop.products.control');
     }
 }

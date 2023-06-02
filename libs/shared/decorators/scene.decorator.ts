@@ -1,6 +1,6 @@
-import { Scenes } from '@libs/shared/types';
+import { I18nPath, Scenes } from '@shared/types';
 import { Scene } from 'nestjs-telegraf';
 
-export function SceneContract(sceneId: Scenes): ClassDecorator {
+export function SceneContract(sceneId: I18nPath): ClassDecorator {
     return Scene(sceneId as string);
 }

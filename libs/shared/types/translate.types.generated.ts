@@ -9,20 +9,123 @@ export type I18nTranslations = {
         "back": string;
         "change_language": string;
         "faq": string;
+        "name": string;
+        "accept": string;
+        "cancel": string;
+        "add_photos": string;
+        "admin": {
+            "adminpanel": string;
+            "create": string;
+            "control": string;
+        };
+        "shop": {
+            "chapters": {
+                "create": string;
+                "modify": string;
+                "delete": string;
+            };
+            "categories": {
+                "list": string;
+                "control": string;
+                "create": string;
+                "modify": string;
+                "delete": string;
+            };
+            "products": {
+                "list": string;
+                "control": string;
+                "create": string;
+                "modify": string;
+                "delete": string;
+            };
+        };
+        "products": string;
+        "chapters": string;
+        "buy": string;
     };
     "phrases": {
         "home": string;
         "change_language": string;
         "faq": string;
+        "admin": string;
+        "statuses": {
+            "creation": string;
+        };
+        "templates": {
+            "object-for-subject": string;
+            "enter": string;
+            "item-value": string;
+        };
+        "objects": {
+            "name": string;
+            "description": string;
+            "pics": string;
+        };
+        "shop": {
+            "chapters": {
+                "shkiper": string;
+                "list": string;
+                "control": string;
+                "create": string;
+                "modify": string;
+                "delete": string;
+                "confirm": string;
+            };
+            "categories": {
+                "shkiper": string;
+                "list": string;
+                "control": string;
+                "create": string;
+                "modify": string;
+                "delete": string;
+            };
+            "products": {
+                "shkiper": string;
+                "list": string;
+                "control": string;
+                "create": string;
+                "modify": string;
+                "delete": string;
+            };
+        };
     };
     "languages": {
         "en": string;
         "ru": string;
     };
     "scenes": {
-        "home": {};
-        "change_language": {};
-        "faq": {};
+        "home": string;
+        "faq": string;
+        "admin": string;
+        "change_language": string;
+        "shop": {
+            "chapters": {
+                "section": string;
+                "list": string;
+                "control": string;
+                "create": string;
+                "input-name": string;
+                "input-description": string;
+                "input-pics": string;
+                "confirm": string;
+                "modify": string;
+                "delete": string;
+            };
+            "categories": {
+                "list": string;
+                "control": string;
+                "create": string;
+                "modify": string;
+                "delete": string;
+            };
+            "products": {
+                "list": string;
+                "control": string;
+                "create": string;
+                "modify": string;
+                "delete": string;
+            };
+        };
     };
 };
 export type I18nPath = Path<I18nTranslations>;

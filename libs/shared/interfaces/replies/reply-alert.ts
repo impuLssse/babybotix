@@ -1,4 +1,4 @@
-import { I18nPath } from '../types';
+import { I18nPath } from '../../types';
 
 export interface IReplyAlertOptions {
     text: I18nPath;

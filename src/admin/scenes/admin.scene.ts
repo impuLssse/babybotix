@@ -3,8 +3,8 @@ import { ActionContract, SceneContract } from '@libs/shared/decorators';
 import { IContext } from '@libs/shared/interfaces';
 import { SceneEnter } from 'nestjs-telegraf';
 
-@SceneContract('scenes.faq')
-export class InfoScene {
+@SceneContract('scenes.admin')
+export class AdminScene {
     constructor(private readonly extra: ExtraService) {}
 
     @SceneEnter()
@@ -13,12 +13,12 @@ export class InfoScene {
         const { lang } = ctx.session;
 
         await extra.replyOrEdit(ctx, ctx.session.lang, {
-            text: 'phrases.faq',
-            ...extra.typedInlineKeyboard([['buttons.back']], lang),
+            text: 'phrases.admin',
+            ...extra.typedInlineKeyboard([['buttons.products']], lang),
         });
     }
 
-    @ActionContract('buttons.back')
+    @ActionContract('buttons.products')
     async back(ctx: IContext) {
         await ctx.scene.enter('scenes.home');
     }

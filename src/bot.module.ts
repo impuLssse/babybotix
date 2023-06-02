@@ -9,11 +9,13 @@ import { BotUpdate } from './bot.update';
 import { Postgres } from '@telegraf/session/pg';
 import { session } from 'telegraf';
 import { PostgresAdapter } from 'kysely';
-import { TranslateModule } from '@core/translate';
 import { CoreModule } from '@core';
-import { ChangeLanguageModule } from './change_language/change_language.module';
-import { InfoModule } from './info/info.module';
-import { HomeModule } from './home/home.module';
+import { TranslateModule } from '@core/translate';
+import { ShopModule } from '@shop';
+import { HomeModule } from '@home';
+import { AdminModule } from '@admin';
+import { InfoModule } from '@info';
+import { ChangeLanguageModule } from '@change_language';
 
 const store = (config: ConfigService) => {
     return Postgres<PostgresAdapter>({
@@ -45,6 +47,8 @@ const store = (config: ConfigService) => {
         ChangeLanguageModule,
         InfoModule,
         HomeModule,
+        AdminModule,
+        ShopModule,
     ],
     controllers: [BotController],
     providers: [BotService, BotUpdate],

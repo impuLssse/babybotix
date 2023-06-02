@@ -1,5 +1,46 @@
 {
     "home": "🔥 Sap, {username}. It BabyBotikShop, here you can buy any product for your desire",
     "change_language": "📚 Choose your preferred language",
-    "faq": "🔍 Frequently asked questions"
+    "faq": "🔍 Frequently asked questions",
+    "admin": "Admin panel",
+    "statuses": {
+        "creation": "📋 Confirm creation for {object}\n\n"
+    },
+    "templates": {
+        "object-for-subject": "✏ Enter {object} for {subject}",
+        "enter": "$t(phrases.templates.object-for-subject, {{ \"object\": \"{object}\", \"subject\": \"{subject}\" }})",
+        "item-value": "⚙️ <b>{item}</b>: <code>{value}</code>"
+    },
+    "objects": {
+        "name": "name",
+        "description": "description",
+        "pics": "pictures"
+    },
+    "shop": {
+        "chapters": {
+            "shkiper": "chapter",
+            "list": "❤️ Select chapter",
+            "control": "Chapters control!",
+            "create": "Chapters create",
+            "modify": "Chapters modify",
+            "delete": "Chapters delete",
+            "confirm": "$t(phrases.statuses.creation, {{ \"object\": \"{object}\" }}) $t(phrases.templates.item-value, {{ \"item\": \"name\", \"value\": \"{name}\" }})\n $t(phrases.templates.item-value, {{ \"item\": \"description\", \"value\": \"{description}\" }})"
+        },
+        "categories": {
+            "shkiper": "category",
+            "list": "❤️ Select category",
+            "control": "Categories control!",
+            "create": "Categories create",
+            "modify": "Categories modify",
+            "delete": "Categories delete"
+        },
+        "products": {
+            "shkiper": "product",
+            "list": "❤️ Select product",
+            "control": "Products control",
+            "create": "Products create",
+            "modify": "Products modify",
+            "delete": "Products delete"
+        }
+    }
 }

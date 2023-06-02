@@ -1,3 +1,3 @@
 import { scenes } from '@libs/locales/scenes.json';
 
-export type Scenes = keyof typeof scenes;
+export type Scenes = typeof scenes;

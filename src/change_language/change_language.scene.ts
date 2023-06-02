@@ -5,7 +5,7 @@ import { Langs } from '@libs/shared/types';
 import { ActionContract, SceneContract } from '@shared/decorators';
 import { SceneEnter } from 'nestjs-telegraf';
 
-@SceneContract('change_language')
+@SceneContract('scenes.change_language')
 export class ChangeLanguageScene {
     constructor(private readonly extra: ExtraService) {}
 
@@ -16,7 +16,7 @@ export class ChangeLanguageScene {
 
         await extra.replyOrEdit(ctx, lang, {
             text: 'phrases.change_language',
-            ...extra.makeInlineKeyboard([['languages.en', 'languages.ru'], ['buttons.back']], lang),
+            ...extra.typedInlineKeyboard([['languages.en', 'languages.ru'], ['buttons.back']], lang),
         });
     }
 
@@ -40,6 +40,6 @@ export class ChangeLanguageScene {
 
     @ActionContract('buttons.back')
     async back(ctx: IContext) {
-        await ctx.scene.enter('home');
+        await ctx.scene.enter('scenes.home');
     }
 }

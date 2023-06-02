@@ -5,6 +5,6 @@ import { IContext } from '@shared/interfaces';
 export class BotUpdate {
     @Start()
     async start(ctx: IContext) {
-        await ctx.scene.enter('home');
+        await ctx.scene.enter('scenes.home');
     }
 }

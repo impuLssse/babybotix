@@ -1,7 +1,36 @@
 {
     "scenes": {
-        "home": {},
-        "change_language": {},
-        "faq": {}
+        "home": "home",
+        "faq": "faq",
+        "admin": "dashboard",
+        "change_language": "change_language",
+        "shop": {
+            "chapters": {
+                "section": "chapters_section",
+                "list": "chapters_list",
+                "control": "chapters_control",
+                "create": "chapters_create",
+                "input-name": "chapters_input-name",
+                "input-description": "chapters_input-description",
+                "input-pics": "chapters_input-pics",
+                "confirm": "chapters_confirm",
+                "modify": "chapters_modify",
+                "delete": "chapters_delete"
+            },
+            "categories": {
+                "list": "categories_list",
+                "control": "categories_control",
+                "create": "categories_create",
+                "modify": "categories_modify",
+                "delete": "categories_delete"
+            },
+            "products": {
+                "list": "products_list",
+                "control": "products_control",
+                "create": "products_create",
+                "modify": "products_modify",
+                "delete": "products_delete"
+            }
+        }
     }
 }
