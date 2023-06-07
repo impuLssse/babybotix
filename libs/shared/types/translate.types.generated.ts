@@ -4,6 +4,7 @@ import { Path } from "nestjs-i18n";
 export type I18nTranslations = {
     "alerts": {
         "language_already_exists": string;
+        "success_created": string;
     };
     "buttons": {
         "back": string;
@@ -12,7 +13,7 @@ export type I18nTranslations = {
         "name": string;
         "accept": string;
         "cancel": string;
-        "add_photos": string;
+        "delete_photo": string;
         "admin": {
             "adminpanel": string;
             "create": string;
@@ -48,22 +49,36 @@ export type I18nTranslations = {
         "change_language": string;
         "faq": string;
         "admin": string;
+        "error": string;
+        "if_you_want_image": string;
         "statuses": {
             "creation": string;
+            "pending-enter": string;
         };
         "templates": {
-            "object-for-subject": string;
-            "enter": string;
             "item-value": string;
+            "item-values-2": string;
         };
         "objects": {
             "name": string;
             "description": string;
-            "pics": string;
+            "image": string;
         };
         "shop": {
             "chapters": {
-                "shkiper": string;
+                "target": string;
+                "list": string;
+                "control": string;
+                "create": string;
+                "modify": string;
+                "delete": string;
+                "input-name": string;
+                "input-description": string;
+                "input-image": string;
+                "confirm": string;
+            };
+            "categories": {
+                "target": string;
                 "list": string;
                 "control": string;
                 "create": string;
@@ -71,16 +86,8 @@ export type I18nTranslations = {
                 "delete": string;
                 "confirm": string;
             };
-            "categories": {
-                "shkiper": string;
-                "list": string;
-                "control": string;
-                "create": string;
-                "modify": string;
-                "delete": string;
-            };
             "products": {
-                "shkiper": string;
+                "target": string;
                 "list": string;
                 "control": string;
                 "create": string;
@@ -93,10 +100,12 @@ export type I18nTranslations = {
         "en": string;
         "ru": string;
     };
+    "forward": string;
+    "backward": string;
     "scenes": {
         "home": string;
         "faq": string;
-        "admin": string;
+        "admin": {};
         "change_language": string;
         "shop": {
             "chapters": {
@@ -106,22 +115,29 @@ export type I18nTranslations = {
                 "create": string;
                 "input-name": string;
                 "input-description": string;
-                "input-pics": string;
                 "confirm": string;
                 "modify": string;
                 "delete": string;
             };
             "categories": {
+                "section": string;
                 "list": string;
                 "control": string;
                 "create": string;
+                "input-name": string;
+                "input-description": string;
+                "confirm": string;
                 "modify": string;
                 "delete": string;
             };
             "products": {
+                "section": string;
                 "list": string;
                 "control": string;
                 "create": string;
+                "input-name": string;
+                "input-description": string;
+                "confirm": string;
                 "modify": string;
                 "delete": string;
             };

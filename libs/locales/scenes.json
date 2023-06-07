@@ -2,7 +2,7 @@
     "scenes": {
         "home": "home",
         "faq": "faq",
-        "admin": "dashboard",
+        "admin": {},
         "change_language": "change_language",
         "shop": {
             "chapters": {
@@ -12,22 +12,29 @@
                 "create": "chapters_create",
                 "input-name": "chapters_input-name",
                 "input-description": "chapters_input-description",
-                "input-pics": "chapters_input-pics",
                 "confirm": "chapters_confirm",
                 "modify": "chapters_modify",
                 "delete": "chapters_delete"
             },
             "categories": {
+                "section": "categories_section",
                 "list": "categories_list",
                 "control": "categories_control",
-                "create": "categories_create",
+                "create": "categoriess_create",
+                "input-name": "categories_input-name",
+                "input-description": "categories_input-description",
+                "confirm": "categories_confirm",
                 "modify": "categories_modify",
                 "delete": "categories_delete"
             },
             "products": {
+                "section": "products_section",
                 "list": "products_list",
                 "control": "products_control",
                 "create": "products_create",
+                "input-name": "products_input-name",
+                "input-description": "products_input-description",
+                "confirm": "products_confirm",
                 "modify": "products_modify",
                 "delete": "products_delete"
             }

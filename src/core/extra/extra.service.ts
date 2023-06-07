@@ -8,18 +8,25 @@ import {
 } from '@shared/interfaces';
 import { Langs, I18nPath, ButtonsStack } from '@shared/types';
 import { TranslateService } from '@core/translate';
-import { Buttons, CallbackButton, Key, Keyboard, MakeOptions } from 'telegram-keyboard';
+import { Buttons, CallbackButton, Key, Keyboard, MakeFunction, MakeOptions } from 'telegram-keyboard';
 import { Input } from 'telegraf';
 import { Message } from 'telegraf/typings/core/types/typegram';
 
 /** Сервис по работе сообщениями
- * * Типизурем работу с кнопками
  * * Переводим клавиатуру и текстовые фразы на любые указанные языки в `libs/locales`
- * ! ВАЖНО: методы которые начинаются с `simple` - нетипизированы, те которые с `make` - типизированы
+ *
+ * ! ВАЖНО: методы которые начинаются с `typed` - типизированы
  * */
 @Injectable()
 export class ExtraService {
     constructor(private readonly translate: TranslateService) {}
+
+    async tryDeleteMessege(ctx: IContext) {
+        try {
+            const { messageId } = ctx.session;
+            await ctx.deleteMessage(messageId ? messageId : undefined);
+        } catch (e) {}
+    }
 
     /** Избавляемся от спама сообщений, путем изменения прошлого текстового сообщения */
     async replyOrEdit(ctx: IContext, lang: Langs, options: IReplyOrEditOptions) {
@@ -40,19 +47,18 @@ export class ExtraService {
         const { reply_markup } = options;
         const phrase = this.translate.findPhrase(options.text, lang, options.args);
 
-        console.log(ctx.session.image);
-        return (await ctx.sendPhoto(Input.fromURLStream(ctx.session.image), {
+        return (await ctx.sendPhoto(Input.fromURLStream(options.image), {
             caption: phrase,
-            reply_to_message_id: ctx.message.message_thread_id,
             reply_markup,
             parse_mode: 'HTML',
+            ...reply_markup,
         })) as Message.PhotoMessage;
     }
 
     /** Вывод уведомления на экран клиента */
     async replyAlert(ctx: IContext, lang: Langs, { text, args }: IReplyAlertOptions): Promise<void> {
         const translatedText = this.translate.findPhrase(text, lang, args);
-        ctx.answerCbQuery(translatedText);
+        await ctx.answerCbQuery(translatedText);
     }
 
     /** Создание типизированой **инлайн** клавиатуры
@@ -87,35 +93,43 @@ export class ExtraService {
      * ], 'en'),
      *   });
      */
-    typedInlineKeyboard(buttons: ButtonsStack, lang: Langs, makeOptions?: MakeOptions) {
-        const parsedButtons = this.toTypedKeyboard(buttons, lang, makeOptions);
-        return Keyboard.inline(parsedButtons as CallbackButton[], makeOptions);
+    typedInlineKeyboard(buttons: ButtonsStack, lang: Langs, makeOptions?: Partial<MakeOptions>) {
+        const parsedButtons = this.toTypedKeyboard(buttons, lang, makeOptions as MakeOptions);
+        return Keyboard.inline(parsedButtons as CallbackButton[], makeOptions as MakeOptions);
     }
 
     /** Создание типизированой клавиатуры */
-    typedKeyboard(buttons: ButtonsStack, lang: Langs, makeOptions?: MakeOptions) {
-        const parsedButtons = this.toTypedKeyboard(buttons, lang, makeOptions);
-        return Keyboard.make(parsedButtons as CallbackButton[], makeOptions);
+    typedKeyboard(buttons: ButtonsStack, lang: Langs, makeOptions?: Partial<MakeOptions>) {
+        const parsedButtons = this.toTypedKeyboard(buttons, lang, makeOptions as MakeOptions);
+        return Keyboard.make(parsedButtons as CallbackButton[], makeOptions as MakeOptions);
     }
 
     /** Создание нетипизированной обычной инлайн клавиатуры */
-    simpleInlineKeyboard(buttons: Buttons, template?: string, makeOptions?: MakeOptions) {
+    simpleInlineKeyboard(buttons: Buttons, template?: string, makeOptions?: Partial<MakeOptions>) {
         if (template) {
             const buttonsFromFactory = this.factoryCallbackData(buttons, template);
-            return Keyboard.inline(buttonsFromFactory, makeOptions);
+            return Keyboard.inline(buttonsFromFactory, makeOptions as MakeOptions);
         }
-        return Keyboard.inline(buttons, makeOptions);
+        return Keyboard.inline(buttons, makeOptions as MakeOptions);
     }
 
     /** Создание нетипизированной обычной клавиатуры */
-    simpleKeyboard(buttons: Buttons, template?: string, makeOptions?: MakeOptions) {
+    simpleKeyboard(buttons: Buttons, template?: string, makeOptions?: Partial<MakeOptions>) {
         if (template) {
             const buttonsFromFactory = this.factoryCallbackData(buttons, template);
-            return Keyboard.make(buttonsFromFactory, makeOptions);
+            return Keyboard.make(buttonsFromFactory, makeOptions as MakeOptions);
         }
-        return Keyboard.make(buttons, makeOptions);
+        return Keyboard.make(buttons, makeOptions as MakeOptions);
     }
 
+    /**
+     * ! **Очень важно в конце вызвать метод inline(), иначе нихуя работать не будет**
+     * @example
+     * const nav = extra.typedKeyboard(['buttons.back'], lang);
+     * const categories = extra.simpleKeyboard([arrayDataFromDatabase]);
+     *
+     * const full = extra.combineKeyboard(nav, categories).inline();
+     */
     combineKeyboard(...keyboards: Keyboard[]) {
         return Keyboard.combine(...keyboards);
     }

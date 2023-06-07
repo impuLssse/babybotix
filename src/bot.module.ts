@@ -9,6 +9,7 @@ import { BotUpdate } from './bot.update';
 import { Postgres } from '@telegraf/session/pg';
 import { session } from 'telegraf';
 import { PostgresAdapter } from 'kysely';
+
 import { CoreModule } from '@core';
 import { TranslateModule } from '@core/translate';
 import { ShopModule } from '@shop';
@@ -16,6 +17,7 @@ import { HomeModule } from '@home';
 import { AdminModule } from '@admin';
 import { InfoModule } from '@info';
 import { ChangeLanguageModule } from '@change_language';
+import { SessionService } from '@core/session';
 
 const store = (config: ConfigService) => {
     return Postgres<PostgresAdapter>({
@@ -51,6 +53,6 @@ const store = (config: ConfigService) => {
         ShopModule,
     ],
     controllers: [BotController],
-    providers: [BotService, BotUpdate],
+    providers: [BotService, BotUpdate, SessionService],
 })
 export class BotModule {}

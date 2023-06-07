@@ -3,39 +3,45 @@
     "change_language": "📚 Choose your preferred language",
     "faq": "🔍 Frequently asked questions",
     "admin": "Admin panel",
+    "error": "Woops, i don't understand your request",
+    "if_you_want_image": "If you want to attach a picture, just send it to me",
     "statuses": {
-        "creation": "📋 Confirm creation for {object}\n\n"
+        "creation": "📋 Confirm creation for {target}\n\n",
+        "pending-enter": "✏ Enter {prop} for {target}"
     },
     "templates": {
-        "object-for-subject": "✏ Enter {object} for {subject}",
-        "enter": "$t(phrases.templates.object-for-subject, {{ \"object\": \"{object}\", \"subject\": \"{subject}\" }})",
-        "item-value": "⚙️ <b>{item}</b>: <code>{value}</code>"
+        "item-value": "<b>⚙ {item}</b>\n<pre>{value}</pre>\n\n",
+        "item-values-2": "<b>⚙ {item1}</b>\n<pre>{value1}</pre>\n\n<b>⚙ {item2}</b>\n<pre>{value2}</pre>\n\n"
     },
     "objects": {
         "name": "name",
         "description": "description",
-        "pics": "pictures"
+        "image": "image"
     },
     "shop": {
         "chapters": {
-            "shkiper": "chapter",
+            "target": "chapter",
             "list": "❤️ Select chapter",
             "control": "Chapters control!",
             "create": "Chapters create",
             "modify": "Chapters modify",
             "delete": "Chapters delete",
-            "confirm": "$t(phrases.statuses.creation, {{ \"object\": \"{object}\" }}) $t(phrases.templates.item-value, {{ \"item\": \"name\", \"value\": \"{name}\" }})\n $t(phrases.templates.item-value, {{ \"item\": \"description\", \"value\": \"{description}\" }})"
+            "input-name": "$t(phrases.statuses.pending-enter, {{ \"prop\": \"{prop}\", \"target\": \"{target}\" }})",
+            "input-description": "$t(phrases.statuses.pending-enter, {{ \"prop\": \"{prop}\", \"target\": \"{target}\" }}) \n\n$t(phrases.templates.item-value, {{ \"item\": \"{item1}\", \"value\": \"{value1}\" }})",
+            "input-image": "$t(phrases.statuses.pending-enter, {{ \"prop\": \"{prop}\", \"target\": \"{target}\" }}) \n\n$t(phrases.templates.item-values-2, {{ \"item1\": \"{item1}\", \"value1\": \"{value1}\", \"item2\": \"{item2}\", \"value2\": \"{value2}\" }})",
+            "confirm": "$t(phrases.statuses.creation, {{ \"target\": \"{target}\" }})$t(phrases.templates.item-values-2, {{ \"item1\": \"{item1}\", \"value1\": \"{value1}\", \"item2\": \"{item2}\", \"value2\": \"{value2}\" }}) $t(phrases.if_you_want_image)"
         },
         "categories": {
-            "shkiper": "category",
-            "list": "❤️ Select category",
+            "target": "category",
+            "list": "🗂 Chapter: <code>{chapter}</code>\n📋 Description: <code>{description}</code>\n🔗 Count categories: <code>{categories_count}</code>",
             "control": "Categories control!",
             "create": "Categories create",
             "modify": "Categories modify",
-            "delete": "Categories delete"
+            "delete": "Categories delete",
+            "confirm": "$t(phrases.statuses.pending-enter, {{ \"prop\": \"{prop}\", \"subject\": \"{target}\" }}) $t(phrases.templates.item-value, {{ \"item\": \"name\", \"value\": \"{name}\" }})\n $t(phrases.templates.item-value, {{ \"item\": \"description\", \"value\": \"{description}\" }})"
         },
         "products": {
-            "shkiper": "product",
+            "target": "product",
             "list": "❤️ Select product",
             "control": "Products control",
             "create": "Products create",

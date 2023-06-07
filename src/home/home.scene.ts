@@ -16,13 +16,13 @@ export class HomeScene {
             text: 'phrases.home',
             args: { username: ctx.from.username },
             ...extra.typedInlineKeyboard(
-                [['buttons.faq', 'buttons.change_language', 'buttons.buy'], [{ text: 'buttons.admin' }]],
+                [['buttons.faq', 'buttons.change_language', 'buttons.buy'], [{ text: 'buttons.admin.adminpanel' }]],
                 lang,
             ),
         });
     }
 
-    @ActionContract('buttons.admin')
+    @ActionContract('buttons.admin.adminpanel')
     async toAdminPanel(ctx: IContext) {
         await ctx.scene.enter('scenes.admin');
     }

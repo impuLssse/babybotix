@@ -2,43 +2,45 @@ import { ExtraService } from '@core/extra';
 import { ActionContract, SceneContract } from '@libs/shared/decorators';
 import { IContext } from '@libs/shared/interfaces';
 import { On, SceneEnter } from 'nestjs-telegraf';
-import { ChaptersService } from '../../chapters.service';
 import { TranslateService } from '@core/translate';
-import { SessionService } from '@core/session';
+import { ProductsService } from '../../products.service';
 
-@SceneContract('scenes.shop.chapters.input-name')
-export class InputNameChapterScene {
+@SceneContract('scenes.shop.products')
+export class InputNameProductScene {
     constructor(
         private readonly extra: ExtraService,
-        private readonly chaptersService: ChaptersService,
-        private readonly sessionService: SessionService,
+        private readonly chaptersService: ProductsService,
         private readonly translate: TranslateService,
     ) {}
 
     @SceneEnter()
     async start(ctx: IContext) {
-        const { extra } = this;
+        const { extra, chaptersService } = this;
         const { lang } = ctx.session;
 
-        const prop = this.translate.findPhrase('phrases.objects.name', lang);
-        const target = this.translate.findPhrase('phrases.shop.chapters.target', lang);
+        const name = this.translate.findPhrase('phrases.objects.name');
+        const target = this.translate.findPhrase('phrases.shop.chapters.target');
 
         await extra.replyOrEdit(ctx, lang, {
-            text: 'phrases.shop.chapters.input-name',
-            args: { prop, target },
+            text: 'phrases.objects.image',
+            args: { object: name, target },
             ...extra.typedInlineKeyboard(['buttons.back'], lang),
         });
     }
 
     @ActionContract('buttons.back')
     async inputNameForNewChapter(ctx: IContext) {
-        this.sessionService.resetChapterSession(ctx);
         await ctx.scene.enter('scenes.shop.chapters.control');
     }
 
     @On('text')
     async onInputName(ctx: IContext) {
-        ctx.session.creation = { name: ctx.message.text };
+        ctx.session.shop = {
+            chapter: {
+                name: ctx.message.text,
+            },
+        };
+
         await ctx.scene.enter('scenes.shop.chapters.input-description');
     }
 }

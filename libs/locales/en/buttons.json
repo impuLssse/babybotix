@@ -5,7 +5,7 @@
     "name": "name",
     "accept": "✅ Accept",
     "cancel": "❌ Cancel",
-    "add_photos": "Add photos",
+    "delete_photo": "Delete photo",
     "admin": {
         "adminpanel": "Admin panel",
         "create": "Create",

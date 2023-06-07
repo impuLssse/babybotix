@@ -4,25 +4,27 @@ import {
     ChaptersScene,
     ConfirmChapterScene,
     InputNameChapterScene,
-    InputPicsChapterScene,
+    InputDescriptionChapterScene,
 } from './scenes';
 import { ExtraModule } from '@core/extra';
 import { PrismaModule } from '@core/prisma';
 import { ChaptersService } from './chapters.service';
 import { TranslateModule } from '@core/translate';
-import { InputDescriptionChapterScene } from './scenes/create-chapter/input-description.chapter.scene';
 import { HttpModule } from '@nestjs/axios';
+import { CategoriesService } from '@shop/categories';
+import { SessionModule, SessionService } from '@core/session';
 
 @Module({
-    imports: [ExtraModule, PrismaModule, TranslateModule, HttpModule],
+    imports: [ExtraModule, PrismaModule, TranslateModule, HttpModule, SessionModule],
     providers: [
         ChaptersScene,
         ChaptersAdminScene,
         InputNameChapterScene,
         InputDescriptionChapterScene,
-        InputPicsChapterScene,
         ConfirmChapterScene,
         ChaptersService,
+        CategoriesService,
+        SessionService,
     ],
 })
 export class ChaptersModule {}

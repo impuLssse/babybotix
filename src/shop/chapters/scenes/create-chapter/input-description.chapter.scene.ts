@@ -2,28 +2,24 @@ import { ExtraService } from '@core/extra';
 import { ActionContract, SceneContract } from '@libs/shared/decorators';
 import { IContext } from '@libs/shared/interfaces';
 import { On, SceneEnter } from 'nestjs-telegraf';
-import { ChaptersService } from '../../chapters.service';
 import { TranslateService } from '@core/translate';
 
 @SceneContract('scenes.shop.chapters.input-description')
 export class InputDescriptionChapterScene {
-    constructor(
-        private readonly extra: ExtraService,
-        private readonly chaptersService: ChaptersService,
-        private readonly translate: TranslateService,
-    ) {}
+    constructor(private readonly extra: ExtraService, private readonly translate: TranslateService) {}
 
     @SceneEnter()
     async start(ctx: IContext) {
-        const { extra, chaptersService } = this;
-        const { lang } = ctx.session;
+        const { extra, translate } = this;
+        const { lang, creation } = ctx.session;
 
-        const description = this.translate.findPhrase('phrases.objects.description');
-        const shkiper = this.translate.findPhrase('phrases.shop.chapters.shkiper');
+        const prop_prev = translate.findPhrase('phrases.objects.name', lang);
+        const prop = translate.findPhrase('phrases.objects.description', lang);
+        const target = translate.findPhrase('phrases.shop.chapters.target', lang);
 
         await extra.replyOrEdit(ctx, lang, {
-            text: 'phrases.templates.enter',
-            args: { object: description, subject: shkiper },
+            text: 'phrases.shop.chapters.input-description',
+            args: { prop, target, item1: prop_prev, value1: creation.name },
             ...extra.typedInlineKeyboard(['buttons.back'], lang),
         });
     }
@@ -35,7 +31,7 @@ export class InputDescriptionChapterScene {
 
     @On('text')
     async onInputDescription(ctx: IContext) {
-        ctx.session.shop.chapter.description = ctx.message.text;
+        ctx.session.creation.description = ctx.message.text;
         await ctx.scene.enter('scenes.shop.chapters.confirm');
     }
 }

@@ -1,2 +1,2 @@
-export * from './products.scene';
-export * from './create-product.scene';
+export * from './products.list';
+export * from './create-product/input-name.product.scene';
