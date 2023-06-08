@@ -6,12 +6,16 @@
     "error": "Woops, i don't understand your request",
     "if_you_want_image": "If you want to attach a picture, just send it to me",
     "statuses": {
-        "creation": "📋 Confirm creation for {target}\n\n",
+        "creation": "📋 Confirm creation for <b>{target}</b>\n\n",
         "pending-enter": "✏ Enter {prop} for {target}"
     },
     "templates": {
         "item-value": "<b>⚙ {item}</b>\n<pre>{value}</pre>\n\n",
         "item-values-2": "<b>⚙ {item1}</b>\n<pre>{value1}</pre>\n\n<b>⚙ {item2}</b>\n<pre>{value2}</pre>\n\n"
+    },
+    "inputs": {
+        "name": "$t(phrases.statuses.pending-enter, {{ \"prop\": \"{prop}\", \"target\": \"{target}\" }})",
+        "description": "$t(phrases.statuses.pending-enter, {{ \"prop\": \"{prop}\", \"target\": \"{target}\" }}) \n\n$t(phrases.templates.item-value, {{ \"item\": \"{item1}\", \"value\": \"{value1}\" }})"
     },
     "objects": {
         "name": "name",
@@ -26,9 +30,6 @@
             "create": "Chapters create",
             "modify": "Chapters modify",
             "delete": "Chapters delete",
-            "input-name": "$t(phrases.statuses.pending-enter, {{ \"prop\": \"{prop}\", \"target\": \"{target}\" }})",
-            "input-description": "$t(phrases.statuses.pending-enter, {{ \"prop\": \"{prop}\", \"target\": \"{target}\" }}) \n\n$t(phrases.templates.item-value, {{ \"item\": \"{item1}\", \"value\": \"{value1}\" }})",
-            "input-image": "$t(phrases.statuses.pending-enter, {{ \"prop\": \"{prop}\", \"target\": \"{target}\" }}) \n\n$t(phrases.templates.item-values-2, {{ \"item1\": \"{item1}\", \"value1\": \"{value1}\", \"item2\": \"{item2}\", \"value2\": \"{value2}\" }})",
             "confirm": "$t(phrases.statuses.creation, {{ \"target\": \"{target}\" }})$t(phrases.templates.item-values-2, {{ \"item1\": \"{item1}\", \"value1\": \"{value1}\", \"item2\": \"{item2}\", \"value2\": \"{value2}\" }}) $t(phrases.if_you_want_image)"
         },
         "categories": {
@@ -38,7 +39,7 @@
             "create": "Categories create",
             "modify": "Categories modify",
             "delete": "Categories delete",
-            "confirm": "$t(phrases.statuses.pending-enter, {{ \"prop\": \"{prop}\", \"subject\": \"{target}\" }}) $t(phrases.templates.item-value, {{ \"item\": \"name\", \"value\": \"{name}\" }})\n $t(phrases.templates.item-value, {{ \"item\": \"description\", \"value\": \"{description}\" }})"
+            "confirm": "$t(phrases.statuses.creation, {{ \"target\": \"{target}\" }})$t(phrases.templates.item-values-2, {{ \"item1\": \"{item1}\", \"value1\": \"{value1}\", \"item2\": \"{item2}\", \"value2\": \"{value2}\" }}) $t(phrases.if_you_want_image)"
         },
         "products": {
             "target": "product",

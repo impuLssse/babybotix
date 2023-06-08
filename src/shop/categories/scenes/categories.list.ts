@@ -4,22 +4,30 @@ import { IContext, IReplyOrEditOptions, IReplyOrEditWithPhotoOptions } from '@sh
 import { SceneEnter } from 'nestjs-telegraf';
 import { Logger } from '@nestjs/common';
 import { SessionService } from '@core/session';
+import { CategoriesService } from '../categories.service';
 
 @SceneContract('scenes.shop.categories.list')
 export class CategoriesScene {
-    constructor(private readonly extra: ExtraService, private readonly sessionService: SessionService) {}
+    constructor(
+        private readonly extra: ExtraService,
+        private readonly sessionService: SessionService,
+        private readonly categoriesService: CategoriesService,
+    ) {}
 
     @SceneEnter()
     async start(ctx: IContext) {
-        const { extra } = this;
+        const { extra, categoriesService } = this;
         const { lang } = ctx.session;
-        const { name, description, image, categories } = ctx.session.shop.chapter;
+        const { id: chapterId, name, description, image } = ctx.session.shop.chapter;
 
         Logger.verbose(ctx.session.shop, `SESSION - SHOP/CATEGORIES`);
 
+        const categories = await categoriesService.getCategories({ chapterId });
+        const categoriesNames = categories.map((category) => category.name);
+
         const keyboardNavigation = extra.typedKeyboard([['buttons.admin.control'], ['buttons.back']], lang);
-        const keyboardCategories = extra.simpleKeyboard([]);
-        const keyboardFull = extra.combineKeyboard(keyboardNavigation, keyboardCategories).inline();
+        const keyboardCategories = extra.simpleKeyboard([categoriesNames], 'category_', { columns: 2 });
+        const keyboardFull = extra.combineKeyboard(keyboardCategories, keyboardNavigation).inline();
 
         const opts = {
             text: 'phrases.shop.categories.list',

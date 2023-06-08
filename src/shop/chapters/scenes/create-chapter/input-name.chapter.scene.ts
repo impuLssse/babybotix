@@ -2,7 +2,6 @@ import { ExtraService } from '@core/extra';
 import { ActionContract, SceneContract } from '@libs/shared/decorators';
 import { IContext } from '@libs/shared/interfaces';
 import { On, SceneEnter } from 'nestjs-telegraf';
-import { ChaptersService } from '../../chapters.service';
 import { TranslateService } from '@core/translate';
 import { SessionService } from '@core/session';
 
@@ -10,21 +9,23 @@ import { SessionService } from '@core/session';
 export class InputNameChapterScene {
     constructor(
         private readonly extra: ExtraService,
-        private readonly chaptersService: ChaptersService,
         private readonly sessionService: SessionService,
         private readonly translate: TranslateService,
     ) {}
 
     @SceneEnter()
     async start(ctx: IContext) {
-        const { extra } = this;
+        const { extra, translate } = this;
         const { lang } = ctx.session;
 
-        const prop = this.translate.findPhrase('phrases.objects.name', lang);
-        const target = this.translate.findPhrase('phrases.shop.chapters.target', lang);
+        const [prop, target] = translate.findPhrases(
+            lang,
+            { phrase: 'phrases.objects.name' },
+            { phrase: 'phrases.shop.chapters.target' },
+        );
 
         await extra.replyOrEdit(ctx, lang, {
-            text: 'phrases.shop.chapters.input-name',
+            text: 'phrases.inputs.name',
             args: { prop, target },
             ...extra.typedInlineKeyboard(['buttons.back'], lang),
         });

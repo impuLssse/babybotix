@@ -59,6 +59,10 @@ export type I18nTranslations = {
             "item-value": string;
             "item-values-2": string;
         };
+        "inputs": {
+            "name": string;
+            "description": string;
+        };
         "objects": {
             "name": string;
             "description": string;
@@ -72,9 +76,6 @@ export type I18nTranslations = {
                 "create": string;
                 "modify": string;
                 "delete": string;
-                "input-name": string;
-                "input-description": string;
-                "input-image": string;
                 "confirm": string;
             };
             "categories": {

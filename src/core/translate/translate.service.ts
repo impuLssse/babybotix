@@ -3,6 +3,11 @@ import { Injectable } from '@nestjs/common';
 import { Langs } from '@shared/types';
 import { I18nService } from 'nestjs-i18n';
 
+interface IPhrase {
+    phrase: I18nPath;
+    args?: any;
+}
+
 /** Сервис по поиску перевода
  * * Берет переводы из `libs/locales/...`
  * */
@@ -24,5 +29,14 @@ export class TranslateService {
      * */
     findPhrase(phrase: I18nPath, lang: Langs = 'en', args?: any): string {
         return this.locales.translate<I18nPath>(phrase, { lang, args }).toString();
+    }
+
+    findPhrases(lang: Langs = 'en', ...phrases: IPhrase[]) {
+        return phrases.reduce((acc, item) => {
+            const translated = this.findPhrase(item.phrase, lang, item.args);
+            acc.push(translated);
+
+            return acc;
+        }, []);
     }
 }

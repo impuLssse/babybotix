@@ -4,44 +4,7 @@
 
 ## Технологии
 
-NestJS, PostgreSQL, Prisma, nestjs-telegraf, telegram-keyboard
-
-## Структура проекта
-
-```
-.env
-package.json
-
-src
-└── admin/assortiment/product ── scene modules
-    ├── product.module.ts
-    ├── product.service.ts
-	└── product.scene.ts
-
-	└── translate ── i18n logic
-		├── translate.service.ts
-		├── translate.scene.ts
-		├── translate.generated.ts
-		└── locales
-			├── en...
-			└── ru...
-libs
-└── shared
-    └── src
-		├── shared.module.ts
-		├── constants
-		└── interfaces
-└── providers
-    └── src
-		├── providers.module.ts
-		└── prisma
-└── contracts
-    └── src
-		├── ...
-		└── ...
-```
-
----
+## NestJS, PostgreSQL, Prisma, nestjs-telegraf, telegram-keyboard
 
 ## Настройка окружения
 

@@ -8,9 +8,13 @@ export class CategoriesService {
     constructor(private readonly prisma: PrismaService) {}
 
     async createCategory(chapterId: number, category: ICreateEntity): Promise<Category> {
+        console.log(category);
+
         return await this.prisma.category.create({
             data: {
-                chapterId,
+                chapter: {
+                    connect: { id: chapterId },
+                },
                 ...(category as Required<ICreateEntity>),
             },
         });

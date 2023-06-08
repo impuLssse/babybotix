@@ -3,19 +3,14 @@ import { ActionContract, SceneContract } from '@libs/shared/decorators';
 import { IContext } from '@libs/shared/interfaces';
 import { On, SceneEnter } from 'nestjs-telegraf';
 import { TranslateService } from '@core/translate';
-import { ProductsService } from '../../products.service';
 
 @SceneContract('scenes.shop.products')
 export class InputNameProductScene {
-    constructor(
-        private readonly extra: ExtraService,
-        private readonly chaptersService: ProductsService,
-        private readonly translate: TranslateService,
-    ) {}
+    constructor(private readonly extra: ExtraService, private readonly translate: TranslateService) {}
 
     @SceneEnter()
     async start(ctx: IContext) {
-        const { extra, chaptersService } = this;
+        const { extra, translate } = this;
         const { lang } = ctx.session;
 
         const name = this.translate.findPhrase('phrases.objects.name');

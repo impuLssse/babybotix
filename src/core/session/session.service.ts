@@ -11,11 +11,7 @@ export class SessionService {
      * * ! Идите в пизду
      * */
     resetBotSession(ctx: IContext): void {
-        this.resetCategorySession(ctx)
-            .resetChapterSession(ctx)
-            .resetImage(ctx)
-            .resetTarget(ctx)
-            .resetPropsOnCreate(ctx);
+        this.resetCategorySession(ctx).resetChapterSession(ctx).resetImage(ctx).resetPropsOnCreate(ctx);
     }
 
     /**
@@ -32,32 +28,37 @@ export class SessionService {
         return this;
     }
 
-    setCategoriesSession({ session }: IContext, categories: Category[]) {
+    setCategoriesSession({ session }: IContext, categories: Category[]): this {
         session.shop.chapter.categories = categories;
         return this;
     }
 
+    setImage({ session }: IContext, url: URL) {
+        session.image = url.toString();
+        return this;
+    }
+
     resetChapterSession({ session }: IContext): this {
-        session.shop.chapter = undefined;
+        session.shop.chapter = {};
         return this;
     }
 
     resetCategorySession({ session }: IContext): this {
-        session.shop.category = undefined;
+        session.shop.category = {};
         return this;
     }
 
     resetImage({ session }: IContext): this {
-        session.image = undefined;
+        session.image = '';
         return this;
     }
 
     resetTarget({ session }: IContext): this {
-        session.target = undefined;
+        session.target = '';
         return this;
     }
 
-    resetPropsOnCreate<T>({ session }: IContext): this {
+    resetPropsOnCreate({ session }: IContext): this {
         session.creation = {};
         return this;
     }

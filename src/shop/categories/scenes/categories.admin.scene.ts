@@ -1,11 +1,12 @@
 import { ExtraService } from '@core/extra';
+import { SessionService } from '@core/session';
 import { ActionContract, SceneContract } from '@shared/decorators';
 import { IContext } from '@shared/interfaces';
 import { SceneEnter } from 'nestjs-telegraf';
 
 @SceneContract('scenes.shop.categories.control')
 export class CategoriesAdminScene {
-    constructor(private readonly extra: ExtraService) {}
+    constructor(private readonly extra: ExtraService, private readonly sessionService: SessionService) {}
 
     @SceneEnter()
     async start(ctx: IContext) {
@@ -25,6 +26,7 @@ export class CategoriesAdminScene {
 
     @ActionContract('buttons.shop.categories.create')
     async inputNameForNewChapter(ctx: IContext) {
+        this.sessionService.resetCategorySession(ctx).resetImage(ctx);
         await ctx.scene.enter('scenes.shop.categories.input-name');
     }
 }

@@ -38,7 +38,7 @@ model Category {
   name        String    @unique
   image       String    @default("")
   description String
-  chapterId   Int       @unique
+  chapterId   Int
   chapter     Chapter   @relation(fields: [chapterId], references: [id])
   productId   Int?
   product     Product[]
@@ -49,7 +49,7 @@ model Category {
 model Product {
   id         Int       @id @default(autoincrement())
   name       String    @unique
-  price      Int?      @default(0)
+  price      Int
   amount     Int?      @default(0)
   sale       Int?      @default(0)
   category   Category? @relation(fields: [categoryId], references: [id])

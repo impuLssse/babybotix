@@ -20,9 +20,12 @@ export class ConfirmChapterScene {
         const { extra, translate, sessionService } = this;
         const { lang, image, creation } = ctx.session;
 
-        const target = translate.findPhrase('phrases.shop.chapters.target', lang);
-        const propName = translate.findPhrase('phrases.objects.name', lang);
-        const propDescription = translate.findPhrase('phrases.objects.description', lang);
+        const [propPrevious, prop, target] = translate.findPhrases(
+            lang,
+            { phrase: 'phrases.objects.description' },
+            { phrase: 'phrases.objects.name' },
+            { phrase: 'phrases.shop.chapters.target' },
+        );
 
         const keyboardIfHaveImage = extra.typedKeyboard(['buttons.delete_photo'], lang);
         const keyboardNavigation = extra.typedKeyboard([['buttons.accept', 'buttons.cancel'], ['buttons.back']], lang);
@@ -35,9 +38,9 @@ export class ConfirmChapterScene {
             text: 'phrases.shop.chapters.confirm',
             args: {
                 target,
-                item1: propName,
+                item1: prop,
                 value1: creation.name,
-                item2: propDescription,
+                item2: propPrevious,
                 value2: creation.description,
             },
             ...keyboard,
@@ -54,10 +57,8 @@ export class ConfirmChapterScene {
 
     @ActionContract('buttons.delete_photo')
     async deletePhoto(ctx: IContext) {
-        const { extra, sessionService } = this;
-
-        await extra.tryDeleteMessege(ctx);
-        sessionService.resetImage(ctx);
+        await this.extra.tryDeleteMessege(ctx);
+        this.sessionService.resetImage(ctx);
         await ctx.scene.reenter();
     }
 
@@ -69,7 +70,6 @@ export class ConfirmChapterScene {
 
     @ActionContract('buttons.back')
     async back(ctx: IContext) {
-        this.sessionService.resetChapterSession(ctx);
         await ctx.scene.enter('scenes.shop.chapters.input-description');
     }
 
@@ -82,7 +82,7 @@ export class ConfirmChapterScene {
         await extra.tryDeleteMessege(ctx);
 
         const newChapter = await chaptersService.createChapter({ ...chapter, image });
-        sessionService.resetChapterSession(ctx).resetImage(ctx).resetPropsOnCreate(ctx);
+        sessionService.resetPropsOnCreate(ctx);
 
         const prop = translate.findPhrase('phrases.objects.name');
         const target = translate.findPhrase('phrases.shop.chapters.target');
@@ -97,12 +97,9 @@ export class ConfirmChapterScene {
 
     @On('photo')
     async onInputDescription(ctx: IContext) {
-        const { file_id } = ctx.update.message.photo.pop();
+        await this.extra.saveImage(ctx);
 
-        const url = await ctx.telegram.getFileLink(file_id);
-        ctx.session.image = url.toString();
-
-        await ctx.deleteMessage(ctx.session.messageId);
+        await this.extra.tryDeleteMessege(ctx);
         await ctx.scene.reenter();
     }
 }

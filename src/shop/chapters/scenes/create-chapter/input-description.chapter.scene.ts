@@ -1,6 +1,6 @@
 import { ExtraService } from '@core/extra';
-import { ActionContract, SceneContract } from '@libs/shared/decorators';
-import { IContext } from '@libs/shared/interfaces';
+import { ActionContract, SceneContract } from '@shared/decorators';
+import { IContext } from '@shared/interfaces';
 import { On, SceneEnter } from 'nestjs-telegraf';
 import { TranslateService } from '@core/translate';
 
@@ -13,13 +13,16 @@ export class InputDescriptionChapterScene {
         const { extra, translate } = this;
         const { lang, creation } = ctx.session;
 
-        const prop_prev = translate.findPhrase('phrases.objects.name', lang);
-        const prop = translate.findPhrase('phrases.objects.description', lang);
-        const target = translate.findPhrase('phrases.shop.chapters.target', lang);
+        const [propPrevious, prop, target] = translate.findPhrases(
+            lang,
+            { phrase: 'phrases.objects.name' },
+            { phrase: 'phrases.objects.description' },
+            { phrase: 'phrases.shop.chapters.target' },
+        );
 
         await extra.replyOrEdit(ctx, lang, {
-            text: 'phrases.shop.chapters.input-description',
-            args: { prop, target, item1: prop_prev, value1: creation.name },
+            text: 'phrases.inputs.description',
+            args: { prop, target, item1: propPrevious, value1: creation.name },
             ...extra.typedInlineKeyboard(['buttons.back'], lang),
         });
     }

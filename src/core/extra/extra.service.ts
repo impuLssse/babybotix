@@ -11,6 +11,7 @@ import { TranslateService } from '@core/translate';
 import { Buttons, CallbackButton, Key, Keyboard, MakeFunction, MakeOptions } from 'telegram-keyboard';
 import { Input } from 'telegraf';
 import { Message } from 'telegraf/typings/core/types/typegram';
+import { SessionService } from '@core/session';
 
 /** Сервис по работе сообщениями
  * * Переводим клавиатуру и текстовые фразы на любые указанные языки в `libs/locales`
@@ -19,7 +20,7 @@ import { Message } from 'telegraf/typings/core/types/typegram';
  * */
 @Injectable()
 export class ExtraService {
-    constructor(private readonly translate: TranslateService) {}
+    constructor(private readonly translate: TranslateService, private readonly sessionService: SessionService) {}
 
     async tryDeleteMessege(ctx: IContext) {
         try {
@@ -61,6 +62,14 @@ export class ExtraService {
         await ctx.answerCbQuery(translatedText);
     }
 
+    /** Сохраняем отправленную нам картинку в сессию */
+    async saveImage(ctx: IContext) {
+        const { file_id } = ctx.update.message.photo.pop();
+
+        const url = await ctx.telegram.getFileLink(file_id);
+        this.sessionService.setImage(ctx, url);
+    }
+
     /** Создание типизированой **инлайн** клавиатуры
      * * Пишем ключ кнопки, например в файл `libs/locales/en/buttons.json`
      * * Затем это генерируется - от `libs/shared/types/translate.types.generated.ts`
@@ -94,8 +103,7 @@ export class ExtraService {
      *   });
      */
     typedInlineKeyboard(buttons: ButtonsStack, lang: Langs, makeOptions?: Partial<MakeOptions>) {
-        const parsedButtons = this.toTypedKeyboard(buttons, lang, makeOptions as MakeOptions);
-        return Keyboard.inline(parsedButtons as CallbackButton[], makeOptions as MakeOptions);
+        return this.typedKeyboard(buttons, lang, makeOptions).inline();
     }
 
     /** Создание типизированой клавиатуры */
@@ -106,11 +114,7 @@ export class ExtraService {
 
     /** Создание нетипизированной обычной инлайн клавиатуры */
     simpleInlineKeyboard(buttons: Buttons, template?: string, makeOptions?: Partial<MakeOptions>) {
-        if (template) {
-            const buttonsFromFactory = this.factoryCallbackData(buttons, template);
-            return Keyboard.inline(buttonsFromFactory, makeOptions as MakeOptions);
-        }
-        return Keyboard.inline(buttons, makeOptions as MakeOptions);
+        return this.simpleKeyboard(buttons, template, makeOptions).inline();
     }
 
     /** Создание нетипизированной обычной клавиатуры */
